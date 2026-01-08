@@ -1,0 +1,10 @@
+Time resolution is 1 ps
+=== TEST REGISTER FILE ===
+[RESET] R0=0000 R1=0000 R2=0000
+[WRITE] R1=1111 (expect 1111)
+[WRITE] R2=2222 (expect 2222)
+[ZERO] R0=0000 (expect 0000)
+[READ] read_data1=1111 (R1)
+[READ] read_data2=2222 (R2)
+=== END TEST REGISTER FILE ===
+$finish called at time : 106 ns : File "C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.srcs/sim_1/new/tb_RF.v" Line 122

@@ -1,0 +1,6 @@
+0x3015   // ADDI r1, r0, +5
+0x3227   // ADDI r2, r1, +7
+0x3431   // ADDI r4, r2, +1
+0x5410   // BNEQ r4, r1, +1
+0x700E   // JUMP
+0xF000   // HLT
