@@ -41,7 +41,7 @@ module tb_cpu;
 
         #20 reset = 0;
 
-        repeat (100) @(posedge clk);
+        repeat (50) @(posedge clk);
 
         $display("=== TIMEOUT: HALT NOT DETECTED ===");
         $finish;

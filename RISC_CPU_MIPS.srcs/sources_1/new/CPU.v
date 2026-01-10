@@ -85,6 +85,7 @@ wire [15:0] write_data, read_data1, read_data2;
 
 register_file RF (
     .clk(clk),
+    .reset(reset),
     .reg_write(RegWrite),
     .read_reg1(read_reg1),
     .read_reg2(read_reg2),
@@ -98,12 +99,18 @@ register_file RF (
 wire [4:0] alu_ctrl;
 alu_control ALU_CTRL (
     .ALUOp(ALUOp),
+    .opcode(instruction[15:12]),
     .funct(instruction[2:0]),
     .alu_ctrl(alu_ctrl)
 );
 
 // Sign extend
-wire [15:0] sign_ext = {{10{instruction[5]}}, instruction[5:0]};
+wire [15:0] sign_ext;
+assign sign_ext = 
+    (instruction[15:12] == 4'b0011 || // ADDI
+     instruction[15:12] == 4'b0100)   // SLTI
+    ? {10'b0, instruction[5:0]}       // ZERO-EXTEND
+    : {{10{instruction[5]}}, instruction[5:0]}; // SIGN-EXTEND (branch)
 
 // ALU
 wire [15:0] alu_result;
@@ -129,7 +136,7 @@ data_memory DM (
 );
 
 // MUX for write register
-assign write_reg = RegDst ? instruction[11:9] : instruction[8:6];
+assign write_reg = RegDst ? instruction[5:3] : instruction[8:6];
 
 // MUX for write data
 assign write_data = MemToReg ? mem_data : alu_result;
