@@ -7,4 +7,4 @@ Time resolution is 1 ps
 [READ] read_data1=1111 (R1)
 [READ] read_data2=2222 (R2)
 === END TEST REGISTER FILE ===
-$finish called at time : 106 ns : File "C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.srcs/sim_1/new/tb_RF.v" Line 122
+$finish called at time : 106 ns : File "C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sim_1/new/tb_RF.v" Line 122

@@ -1,3 +1,12 @@
+//CPU test program
+3045    // ADDI $1, $0, 5
+3287    // ADDI $2, $1, 7
+3501    // ADDI $4, $2, 1
+5841    // BNEQ $4, $1, 1  
+7000    // JUMP (Trap)
+F000    // HALT
+
+//Control unit and intruction memory test program
 0x4221   // SLTI r2, r1, +1          PC=0000
 0x3015   // ADDI r1, r0, +5          PC=0002
 

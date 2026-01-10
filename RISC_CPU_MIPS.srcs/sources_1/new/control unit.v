@@ -37,7 +37,9 @@ module control_unit (
     output reg [1:0] ALUOp,
 
     output reg [1:0] BranchCond, // 00: BEQ, 01: BNEQ, 10: BGTZ
-    output reg JumpType          // 0: J, 1: JR
+    output reg JumpType,          // 0: J, 1: JR
+    output reg IsShift,           // ALU2
+    output reg AddrAlign          // LH / SH
 );
 
     always @* begin
@@ -54,6 +56,8 @@ module control_unit (
         ALUOp      = 2'b00;
         BranchCond = 2'b00;
         JumpType   = 0;
+        IsShift    = 0;
+        AddrAlign  = 0;
 
         case (opcode)
 
@@ -81,12 +85,13 @@ module control_unit (
             end
 
             // ======================
-            // ALU2 - Shift
+            // ALU2 - Shift / Rotate
             // ======================
             4'b0010: begin
                 RegDst   = 1;
                 RegWrite = 1;
                 ALUOp    = 2'b11;
+                IsShift  = 1;
             end
 
             // ======================
@@ -145,6 +150,7 @@ module control_unit (
                 MemRead   = 1;
                 MemToReg  = 1;
                 ALUOp     = 2'b00;
+                AddrAlign = 1;
             end
 
             // ======================
@@ -154,6 +160,7 @@ module control_unit (
                 ALUSrc    = 1;
                 MemWrite  = 1;
                 ALUOp     = 2'b00;
+                AddrAlign = 1;
             end
 
             // ======================
@@ -180,6 +187,9 @@ module control_unit (
                 Halt = 1;
             end
 
+            default: begin
+                // giữ default
+            end
         endcase
     end
 endmodule
