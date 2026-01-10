@@ -1,26 +1,25 @@
-0x4221   // SLTI r2, r1, +1          PC=0000
-0x3015   // ADDI r1, r0, +5          PC=0002
+3015   // PC=0000  ADDI r1, r0, +5
+4221   // PC=0002  SLTI r2, r1, +1
 
-0x5404   // BNEQ r4, r1, +4          PC=0004
+5202   // PC=0004  BNEQ r2, r0, +2   (KHÔNG nhảy)
 
-0x3011   // ADDI r1, r0, +1          PC=0006 (bị BNEQ skip)
-0x3012   // ADDI r1, r0, +2          PC=0008 (bị BNEQ skip)
-0x3015   // ADDI r1, r0, +5          PC=000A (bị BNEQ skip)
-0x4221   // SLTI r2, r1, +1          PC=000C (bị BNEQ skip)
+3021   // PC=0006  ADDI r2, r0, +1
+5202   // PC=0008  BNEQ r2, r0, +2   (NHẢY → 000E)
 
-0x700A   // JUMP 0x0010              PC=000E
+3011   // PC=000A  ADDI r1, r0, +1   (skip)
+3012   // PC=000C  ADDI r1, r0, +2   (skip)
 
-0x3013   // ADDI r1, r0, +3          PC=0010  (bị JUMP skip)
-0x3014   // ADDI r1, r0, +4          PC=0012  (bị JUMP skip)
+700A   // PC=000E  JUMP 0x0014       (ĐÚNG)
 
-0x8000   // LH r0, 0(r0)             PC=0014
-0x9000   // SH r0, 0(r0)             PC=0016
-0xA000   // MFSR                     PC=0018
-0xB000   // MTSR                     PC=001A
+3013   // PC=0010  ADDI r1, r0, +3   (skip)
+3014   // PC=0012  ADDI r1, r0, +4   (skip)
 
-0x6402   // BGTZ r2, +2              PC=001C
+6402   // PC=0014  BGTZ r2, +2       (NHẢY)
 
-0x3016   // ADDI r1, r0, +6          PC=001E (bị BGTZ skip)
-0x3017   // ADDI r1, r0, +7          PC=0020 (bị BGTZ skip)
+3016   // PC=0016  ADDI r1, r0, +6   (skip)
+3017   // PC=0018  ADDI r1, r0, +7   (skip)
 
-0xF000   // HLT                     PC=0022
+3020   // PC=001A  ADDI r2, r0, +0
+6402   // PC=001C  BGTZ r2, +2       (KHÔNG nhảy)
+
+F000   // PC=001E  HLT

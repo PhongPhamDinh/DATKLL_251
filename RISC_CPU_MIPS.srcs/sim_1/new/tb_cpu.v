@@ -1,74 +1,104 @@
 `timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 12/20/2025 11:20:01 PM
+// Design Name: 
+// Module Name: tb_cpu
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
 
-module tb_CPU();
 
-    reg clk;
-    reg reset;
-    wire Halt;
+module tb_cpu;
+    reg clk = 0;
+    reg reset = 1;
 
-    CPU uut (
+    // Clock: 100MHz (10ns)
+    always #5 clk = ~clk;
+
+    // DUT
+    CPU test (
         .clk(clk),
         .reset(reset),
-        .Halt(Halt)
+        .Halt()
     );
 
     initial begin
-        clk = 0;
-    end
-    always #5 clk = ~clk;
+        $display("================================================================================");
+        $display(" time | PC   | Instr | rs rt | rs_val  rt_val  | ALUop | in1     in2     | ALUres | Z GT | Br J | MemR MemW | Wreg Wdata");
+        $display("================================================================================");
 
-    initial begin
-        $display("============================================================");
-        $display(" BAT DAU MO PHONG (DEBUG MODE)");
-        $display("============================================================");
-        $display("Time(ns) | PC   | Instr | R1($1) | R2($2) | R4($4) | Note");
-        $display("---------|------|-------|--------|--------|--------|--------");
+        #20 reset = 0;
 
-        reset = 1;
-        #50;
-        reset = 0; 
-        
-        wait(Halt);
-        
-        #10;
-        $display("------------------------------------------------------------");
-        $display(" [INFO] CPU DA DUNG (HALT DETECTED) TAI %t ns", $time);
-        $display("------------------------------------------------------------");
-        
-        if (uut.RF.R[1] === 16'd5 && uut.RF.R[4] === 16'd13 && uut.pc === 16'h000A) begin
-            $display(" [KET QUA] PASSED: CHUC MUNG! Mach chay dung.");
-        end else begin
-            $display(" [KET QUA] FAILED: Ket qua sai hoac PC dung sai cho.");
-            $display("           PC Hien tai: %h (Ky vong: 000A)", uut.pc);
-            $display("           R1: %d, R4: %d", uut.RF.R[1], uut.RF.R[4]);
-        end
+        repeat (100) @(posedge clk);
+
+        $display("=== TIMEOUT: HALT NOT DETECTED ===");
         $finish;
     end
 
     always @(posedge clk) begin
         if (!reset) begin
-            $write("%4t     | %h | %h  | %4d   | %4d   | %4d   | ", 
-                   $time, uut.pc, uut.instruction, uut.RF.R[1], uut.RF.R[2], uut.RF.R[4]);
+            $display(
+                "%4t | %4h | %4h | %2d %2d | %6d %6d | %5b | %6d %6d | %6d | %b  %b | %b  %b |  %b    %b |  %2d  %6d",
+                $time,
+                test.pc,
+                test.instruction,
 
-            if (uut.pc === 16'h0000) $display("Khoi tao / ADDI R1");
-            else if (uut.pc === 16'h0002) $display("ADDI R2");
-            else if (uut.pc === 16'h0004) $display("ADDI R4");
-            else if (uut.pc === 16'h0006) $display("BNEQ Check (R4!=R1?)");
-            else if (uut.pc === 16'h0008) $display("!!! VAO JUMP (Loi Branch)");
-            else if (uut.pc === 16'h000A) $display("Dich den (HALT)");
-            else $display("Running...");
+                // Register index
+                test.read_reg1,
+                test.read_reg2,
+
+                // Register values
+                test.read_data1,
+                test.read_data2,
+
+                // ALU
+                test.alu_ctrl,
+                test.read_data1,
+                (test.ALUSrc ? test.sign_ext : test.read_data2),
+                test.alu_result,
+
+                // Flags
+                test.zero,
+                test.gt_zero,
+
+                // Control
+                test.Branch,
+                test.Jump,
+                test.MemRead,
+                test.MemWrite,
+
+                // Write-back
+                test.write_reg,
+                test.write_data
+            );
+
+            // ===== Data Memory observe =====
+            if (test.MemRead || test.MemWrite) begin
+                $display("      >>> DM: addr=%h write_data=%h read_data=%h",
+                    test.alu_result,
+                    test.read_data2,
+                    test.mem_data
+                );
+            end
+
+            // ===== HALT =====
+            if (test.Halt) begin
+                $display("=== HALT detected at PC = %h ===", test.pc);
+                $finish;
+            end
         end
     end
-
-    initial begin
-        #1000; 
-        if (!Halt) begin
-            $display("------------------------------------------------------------");
-            $display(" [ERROR] TIMEOUT: CPU khong dung sau 1000ns.");
-            $display("         Kiem tra xem co bi lap vo tan (Infinite Loop) khong?");
-            $display("------------------------------------------------------------");
-            $stop;
-        end
-    end
-
 endmodule
+

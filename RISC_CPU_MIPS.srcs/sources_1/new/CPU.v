@@ -20,6 +20,28 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 12/20/2025 05:30:37 PM
+// Design Name: 
+// Module Name: CPU
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
 module CPU(
     input clk,
     input reset,
@@ -73,7 +95,7 @@ register_file RF (
 );
 
 // ALU Control
-wire [2:0] alu_ctrl;
+wire [4:0] alu_ctrl;
 alu_control ALU_CTRL (
     .ALUOp(ALUOp),
     .funct(instruction[2:0]),
@@ -91,7 +113,8 @@ alu ALU (
     .input2(ALUSrc ? sign_ext : read_data2),
     .alu_ctrl(alu_ctrl),
     .result(alu_result),
-    .zero(zero)
+    .zero(zero),
+    .gt_zero(gt_zero)
 );
 
 // Data Memory
@@ -114,8 +137,14 @@ assign write_data = MemToReg ? mem_data : alu_result;
 // Branch calculation
 wire [15:0] branch_addr = pc + 16'd2 + (sign_ext << 1);
 
-// PC update
-wire [15:0] pc_next = (Branch && zero) ? branch_addr : pc + 16'd2;
+// Branch update
+localparam OPC_BNEQ = 4'b0101;
+localparam OPC_BGTZ = 4'b0110;
+wire take_branch;
+assign take_branch =
+    (Branch && instruction[15:12] == OPC_BNEQ && !zero) ||
+    (Branch && instruction[15:12] == OPC_BGTZ && gt_zero);
+
 
 // Jump calculation
 wire [15:0] pc_plus_2 = pc + 16'd2;
@@ -131,12 +160,11 @@ always @(posedge clk or posedge reset) begin
         pc <= pc;
     else if (Jump)
         pc <= jump_addr;
-    else if (Branch)
+    else if (take_branch)
         pc <= branch_addr;
     else
         pc <= pc_plus_2;
 end
 
 endmodule
-
 
