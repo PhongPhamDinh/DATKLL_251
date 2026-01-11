@@ -1,0 +1,16 @@
+3045    // 00: ADDI r1, r0, 5  
+4281    // 02: SLTI r2, r1, 1   
+5402    // 04: BNEQ r2, r0, 2   
+3081    // 06: ADDI r2, r0, 1   
+5402    // 08: BNEQ r2, r0, 2   
+3041    // 0A: ADDI r1, r0, 1   - Skip
+3042    // 0C: ADDI r1, r0, 2   - Skip
+700A    // 0E: JUMP 0x0014      
+3043    // 10: ADDI r1, r0, 3   - Skip
+3044    // 12: ADDI r1, r0, 4   - Skip
+6402    // 14: BGTZ r2, 2       
+3046    // 16: ADDI r1, r0, 6   - Skip
+3047    // 18: ADDI r1, r0, 7   - Skip
+3080    // 1A: ADDI r2, r0, 0  
+6402    // 1C: BGTZ r2, 2      
+F000    // 1E: HALT
