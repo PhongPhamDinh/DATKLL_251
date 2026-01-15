@@ -57,7 +57,7 @@ module control_unit (
 
             // --- Immediate ---
             4'b0011: begin RegWrite=1; ALUSrc=1; ALUOp=3'b000; end // ADDI
-            4'b0100: begin RegWrite=1; ALUSrc=1; ALUOp=3'b101; end // SLTI (Mã riêng)
+            4'b0100: begin RegWrite=1; ALUSrc=1; ALUOp=3'b101; end // SLTI 
 
             // --- Branch ---
             4'b0101: begin Branch=1; ALUOp=3'b001; end // BNEQ

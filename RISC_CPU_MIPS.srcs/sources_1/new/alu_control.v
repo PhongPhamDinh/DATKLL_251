@@ -67,12 +67,20 @@ module alu_control (
 
             3'b100: alu_ctrl = 5'b10101; //  LH / SH
             
-            3'b101: begin // Special I-Type
+            3'b101: begin // Special I-Type & FP16
                 if (opcode == 4'b0100) alu_ctrl = 5'b01100; // SLTI / SLT
-                if (opcode == 4'b1110) alu_ctrl = 5'b11111; // FP16 MUL
+                if (opcode == 4'b1110) begin
+                    case(funct)
+                        3'b000: alu_ctrl = 5'b11100; // FP_ADD
+                        3'b001: alu_ctrl = 5'b11101; // FP_SUB
+                        3'b010: alu_ctrl = 5'b11110; // FP_MUL
+                        3'b011: alu_ctrl = 5'b11111; // FP_DIV
+                        default: alu_ctrl = 5'b00000;
+                    endcase
+                end
             end
             
-            3'b110: alu_ctrl = 5'b11110; // MFSR (Pass input2)
+            3'b110: alu_ctrl = 5'b01111; // MFSR (Pass input2)
             
             default: alu_ctrl = 5'b00000;
         endcase

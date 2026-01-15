@@ -27,28 +27,55 @@ module alu (
     output zero
 );
 
-    // FP16 logic variables
-    reg s1, s2, new_s;
-    reg [4:0] e1, e2, final_e;
-    reg [5:0] temp_e;      
-    reg [10:0] m1, m2;      
-    reg [21:0] temp_m;    
-    reg [9:0] final_m;
+    // For FP16
+function real f16_to_real;
+        input [15:0] val;
+        reg sign;
+        reg [4:0] exp;
+        reg [9:0] mant;
+        real r_mant;
+        begin
+            sign = val[15];
+            exp  = val[14:10];
+            mant = val[9:0];
+            if (exp == 0 && mant == 0) f16_to_real = 0.0;
+            else begin
+                r_mant = 1.0 + (mant / 1024.0);
+                if (sign) f16_to_real = -1.0 * r_mant * (2.0**(exp - 15));
+                else      f16_to_real = 1.0 * r_mant * (2.0**(exp - 15));
+            end
+        end
+    endfunction
+
+    function [15:0] real_to_f16;
+        input real r_val;
+        reg sign;
+        integer exp_int;
+        real abs_val;
+        real tmp_mant;
+        reg [9:0] mant_bits;
+        reg [4:0] exp_bits;
+        begin
+            if (r_val == 0.0) real_to_f16 = 16'b0;
+            else begin
+                if (r_val < 0) begin sign = 1; abs_val = -r_val; end
+                else           begin sign = 0; abs_val = r_val; end
+                
+                exp_int = $rtoi($ln(abs_val) / $ln(2.0));
+                if (abs_val < (2.0**exp_int)) exp_int = exp_int - 1;
+                
+                tmp_mant = abs_val / (2.0**exp_int);
+                mant_bits = $rtoi((tmp_mant - 1.0) * 1024.0);
+                exp_bits = exp_int + 15;
+                
+                real_to_f16 = {sign, exp_bits, mant_bits};
+            end
+        end
+    endfunction
 
     always @(*) begin
         // Default assignment
         result  = 0;
-        s1      = 0;
-        s2      = 0;
-        new_s   = 0;
-        e1      = 0;
-        e2      = 0;
-        final_e = 0;
-        temp_e  = 0;
-        m1      = 0;
-        m2      = 0;
-        temp_m  = 0;
-        final_m = 0;
 
         case (alu_ctrl)
             // Arithmetic
@@ -76,35 +103,15 @@ module alu (
 
             // Memory Calc
             5'b10101: result = (input1[15:1] + input2) << 1;
-
+            
             // Pass input2 (Used for MFSR)
-            5'b11110: result = input2;
+            5'b01111: result = input2;
 
-            // FP16 Multiply
-            5'b11111: begin
-                 if (input1[14:0] == 0 || input2[14:0] == 0) result = 0;
-                 else begin
-                    s1 = input1[15]; 
-                    e1 = input1[14:10]; 
-                    m1 = {1'b1, input1[9:0]};
-                    s2 = input2[15]; 
-                    e2 = input2[14:10]; 
-                    m2 = {1'b1, input2[9:0]};
-                    new_s = s1 ^ s2;
-                    temp_e = e1 + e2 - 15;
-                    temp_m = m1 * m2;
-                    
-                    if (temp_m[21]) begin 
-                        final_e = temp_e + 1; 
-                        final_m = temp_m[20:11]; 
-                    end
-                    else begin 
-                        final_e = temp_e; 
-                        final_m = temp_m[19:10]; 
-                    end
-                    result = {new_s, final_e[4:0], final_m};
-                 end
-            end
+            // FP16 Operations 
+            5'b11100: result = real_to_f16(f16_to_real(input1) + f16_to_real(input2)); // FP_ADD
+            5'b11101: result = real_to_f16(f16_to_real(input1) - f16_to_real(input2)); // FP_SUB
+            5'b11110: result = real_to_f16(f16_to_real(input1) * f16_to_real(input2)); // FP_MUL 
+            5'b11111: result = real_to_f16(f16_to_real(input1) / f16_to_real(input2)); // FP_DIV
 
             default: result = 0;
         endcase
