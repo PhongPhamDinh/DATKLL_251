@@ -20,30 +20,31 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module forwarding_unit (
-    input  [2:0] idex_rs,
-    input  [2:0] idex_rt,
-    input        exmem_RegWrite,
-    input  [2:0] exmem_rd,
-    input        memwb_RegWrite,
-    input  [2:0] memwb_rd,
-    output reg [1:0] ForwardA,
-    output reg [1:0] ForwardB
+module forward_module (
+    input  wire [2:0] EX_rs,
+    input  wire [2:0] EX_rt,
+    input  wire [2:0] MEM_rd,
+    input  wire [2:0] WB_rd,
+    input  wire       MEM_RegWrite,
+    input  wire       WB_RegWrite,
+
+    output reg  [1:0] ForwardA,
+    output reg  [1:0] ForwardB
 );
-    always @* begin
-        ForwardA = 2'b00; // 00: ID/EX.rd1
-        ForwardB = 2'b00; // 00: ID/EX.rd2
 
-        // EX hazard
-        if (exmem_RegWrite && (exmem_rd != 3'd0) && (exmem_rd == idex_rs))
-            ForwardA = 2'b10; // EX/MEM.alu_res
-        if (exmem_RegWrite && (exmem_rd != 3'd0) && (exmem_rd == idex_rt))
-            ForwardB = 2'b10;
+always @(*) begin
+    ForwardA = 2'b00;
+    ForwardB = 2'b00;
 
-        // MEM hazard (only if not already taken by EX)
-        if (memwb_RegWrite && (memwb_rd != 3'd0) && (memwb_rd == idex_rs) && (ForwardA == 2'b00))
-            ForwardA = 2'b01; // MEM/WB write-back
-        if (memwb_RegWrite && (memwb_rd != 3'd0) && (memwb_rd == idex_rt) && (ForwardB == 2'b00))
-            ForwardB = 2'b01;
-    end
+    if (MEM_RegWrite && (MEM_rd != 0) && (MEM_rd == EX_rs))
+        ForwardA = 2'b10;
+    else if (WB_RegWrite && (WB_rd != 0) && (WB_rd == EX_rs))
+        ForwardA = 2'b01;
+
+    if (MEM_RegWrite && (MEM_rd != 0) && (MEM_rd == EX_rt))
+        ForwardB = 2'b10;
+    else if (WB_RegWrite && (WB_rd != 0) && (WB_rd == EX_rt))
+        ForwardB = 2'b01;
+end
+
 endmodule

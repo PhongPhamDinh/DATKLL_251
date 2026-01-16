@@ -1,25 +1,8 @@
-3015   // PC=0000  ADDI r1, r0, +5
-4221   // PC=0002  SLTI r2, r1, +1
-
-5202   // PC=0004  BNEQ r2, r0, +2   (KHÔNG nhảy)
-
-3021   // PC=0006  ADDI r2, r0, +1
-5202   // PC=0008  BNEQ r2, r0, +2   (NHẢY → 000E)
-
-3011   // PC=000A  ADDI r1, r0, +1   (skip)
-3012   // PC=000C  ADDI r1, r0, +2   (skip)
-
-700A   // PC=000E  JUMP 0x0014       (ĐÚNG)
-
-3013   // PC=0010  ADDI r1, r0, +3   (skip)
-3014   // PC=0012  ADDI r1, r0, +4   (skip)
-
-6402   // PC=0014  BGTZ r2, +2       (NHẢY)
-
-3016   // PC=0016  ADDI r1, r0, +6   (skip)
-3017   // PC=0018  ADDI r1, r0, +7   (skip)
-
-3020   // PC=001A  ADDI r2, r0, +0
-6402   // PC=001C  BGTZ r2, +2       (KHÔNG nhảy)
-
-F000   // PC=001E  HLT
+3005   // ADDI R1, R0, 5
+320A   // ADDI R2, R0, 10
+1A48   // ADD  R3, R1, R2
+18D8   // ADD  R4, R3, R1
+9800   // SH   R4, 0(R0)
+8140   // LH   R5, 0(R0)
+1C68   // ADD  R6, R5, R1
+F000   // HALT

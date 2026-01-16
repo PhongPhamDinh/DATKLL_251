@@ -20,15 +20,28 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module hazard_detection_unit(
-    input        idex_MemRead,
-    input  [2:0] idex_rt,
-    input  [2:0] ifid_rs,
-    input  [2:0] ifid_rt,
-    output       stall_ifid,
-    output       bubble_idex
+module hazard_detection_unit (
+    input  wire [2:0] IFID_rs,
+    input  wire [2:0] IFID_rt,
+    input  wire [2:0] IDEX_rd,
+    input  wire       IDEX_MemRead,
+
+    output reg        PCWrite,
+    output reg        IFIDWrite,
+    output reg        IDFlush
 );
-    assign stall_ifid  = idex_MemRead && ((idex_rt == ifid_rs) || (idex_rt == ifid_rt));
-    assign bubble_idex = stall_ifid;
+
+always @(*) begin
+    PCWrite   = 1'b1;
+    IFIDWrite = 1'b1;
+    IDFlush   = 1'b0;
+
+    if (IDEX_MemRead &&
+       ((IDEX_rd == IFID_rs) || (IDEX_rd == IFID_rt))) begin
+        PCWrite   = 0;
+        IFIDWrite = 0;
+        IDFlush   = 1;
+    end
+end
 
 endmodule
