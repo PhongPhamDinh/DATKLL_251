@@ -105,8 +105,10 @@ F000
 3205   // ADDI R1, R0, 5
 340A   // ADDI R2, R0, 10
 1658   // ADD  R3, R1, R2
+0347   // ADDI R4, R0, 7
+1B41   // SUB  R5, R4, R1
+0363   // ADDI R6, R0, 3
+1F26   // ADD  R7, R0, 3
 1B18   // ADD  R4, R3, R1
 9800   // SW   R4, 0(R0)
-8A00   // LW   R5, 0(R0)
-1D48   // ADD  R6, R5, R1
-F000   // HALT
+8A00   // LW   HALTpppp
