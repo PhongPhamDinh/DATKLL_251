@@ -3,12 +3,12 @@
 # SW Build 6140274 on Thu May 22 00:12:29 MDT 2025
 # IP Build 6138677 on Thu May 22 03:10:11 MDT 2025
 # SharedData Build 6139179 on Tue May 20 17:58:58 MDT 2025
-# Start of session at: Sun Dec 21 18:19:04 2025
-# Process ID         : 33244
-# Current directory  : C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.runs/synth_1
+# Start of session at: Sat Jan 17 10:29:05 2026
+# Process ID         : 18448
+# Current directory  : C:/Study/DATKLL/RISC_CPU_MIPS.runs/synth_1
 # Command line       : vivado.exe -log CPU.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source CPU.tcl
-# Log file           : C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.runs/synth_1/CPU.vds
-# Journal file       : C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.runs/synth_1\vivado.jou
+# Log file           : C:/Study/DATKLL/RISC_CPU_MIPS.runs/synth_1/CPU.vds
+# Journal file       : C:/Study/DATKLL/RISC_CPU_MIPS.runs/synth_1\vivado.jou
 # Running On         : Admin-PC
 # Platform           : Windows Server 2016 or Windows 10
 # Operating System   : 26100
@@ -17,8 +17,8 @@
 # CPU Physical cores : 6
 # CPU Logical cores  : 12
 # Host memory        : 34238 MB
-# Swap memory        : 23622 MB
-# Total Virtual      : 57860 MB
-# Available Virtual  : 23844 MB
+# Swap memory        : 6710 MB
+# Total Virtual      : 40949 MB
+# Available Virtual  : 19013 MB
 #-----------------------------------------------------------
 source CPU.tcl -notrace

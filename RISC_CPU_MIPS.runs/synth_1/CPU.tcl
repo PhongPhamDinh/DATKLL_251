@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.runs/synth_1/CPU.tcl"
+  variable script "C:/Study/DATKLL/RISC_CPU_MIPS.runs/synth_1/CPU.tcl"
   variable category "vivado_synth"
 }
 
@@ -56,6 +56,7 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
+set_param chipscope.maxJobs 3
 set_param general.usePosixSpawnForFork 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7z020clg400-1
@@ -63,26 +64,26 @@ create_project -in_memory -part xc7z020clg400-1
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
-set_property webtalk.parent_dir C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.cache/wt [current_project]
-set_property parent.project_path C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.xpr [current_project]
+set_property webtalk.parent_dir C:/Study/DATKLL/RISC_CPU_MIPS.cache/wt [current_project]
+set_property parent.project_path C:/Study/DATKLL/RISC_CPU_MIPS.xpr [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
 set_property board_part_repo_paths {C:/Users/Admin/AppData/Roaming/Xilinx/Vivado/2025.1/xhub/board_store/xilinx_board_store} [current_project]
 set_property board_part digilentinc.com:arty-z7-20:part0:1.1 [current_project]
-set_property ip_output_repo c:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.cache/ip [current_project]
+set_property ip_output_repo c:/Study/DATKLL/RISC_CPU_MIPS.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib {
-  C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.srcs/sources_1/new/alu.v
-  C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.srcs/sources_1/new/alu_control.v
-  {C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.srcs/sources_1/new/control unit.v}
-  C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.srcs/sources_1/new/data_memory.v
-  {C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.srcs/sources_1/new/forward module.v}
-  {C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.srcs/sources_1/new/intruction memory.v}
-  {C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.srcs/sources_1/new/module harzard.v}
-  {C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.srcs/sources_1/new/register aray.v}
-  C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.srcs/sources_1/new/CPU.v
+  C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/alu.v
+  C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/alu_control.v
+  {C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/control unit.v}
+  C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/data_memory.v
+  {C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/forward module.v}
+  {C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/intruction memory.v}
+  {C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/module harzard.v}
+  {C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/register aray.v}
+  C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/CPU.v
 }
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -93,12 +94,12 @@ OPTRACE "Adding files" END { }
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.srcs/constrs_1/imports/digilent-xdc-master/Arty-Z7-20-Master.xdc
-set_property used_in_implementation false [get_files C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.srcs/constrs_1/imports/digilent-xdc-master/Arty-Z7-20-Master.xdc]
+read_xdc C:/Study/DATKLL/RISC_CPU_MIPS.srcs/constrs_1/imports/digilent-xdc-master/Arty-Z7-20-Master.xdc
+set_property used_in_implementation false [get_files C:/Study/DATKLL/RISC_CPU_MIPS.srcs/constrs_1/imports/digilent-xdc-master/Arty-Z7-20-Master.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
 
-read_checkpoint -auto_incremental -incremental C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.srcs/utils_1/imports/synth_1/CPU.dcp
+read_checkpoint -auto_incremental -incremental C:/Study/DATKLL/RISC_CPU_MIPS.srcs/utils_1/imports/synth_1/CPU.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }

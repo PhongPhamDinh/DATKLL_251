@@ -25,7 +25,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='C:/Study/RISC_CPU_MIPS/RISC_CPU_MIPS.runs/synth_1'
+HD_PWD='C:/Study/DATKLL/RISC_CPU_MIPS.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log
