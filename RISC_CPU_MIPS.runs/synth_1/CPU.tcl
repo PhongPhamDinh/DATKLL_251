@@ -56,7 +56,6 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param chipscope.maxJobs 3
 set_param general.usePosixSpawnForFork 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7z020clg400-1
@@ -75,6 +74,7 @@ set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib {
+  C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/CPU.v
   C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/alu.v
   C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/alu_control.v
   {C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/control unit.v}
@@ -83,7 +83,6 @@ read_verilog -library xil_defaultlib {
   {C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/intruction memory.v}
   {C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/module harzard.v}
   {C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/register aray.v}
-  C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/CPU.v
 }
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
