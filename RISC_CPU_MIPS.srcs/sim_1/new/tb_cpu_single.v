@@ -8,7 +8,7 @@ module tb_cpu_single;
     // Clock 100MHz
     always #5 clk = ~clk;
 
-    CPU test (
+    CPU_single test (
         .clk(clk), .reset(reset), .Halt()
     );
 
