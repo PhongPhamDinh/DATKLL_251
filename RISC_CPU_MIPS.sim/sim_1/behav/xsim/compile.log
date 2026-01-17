@@ -14,5 +14,3 @@ INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Study/DATKLL/RISC_CPU_MIPS.srcs/
 INFO: [VRFC 10-311] analyzing module register_file
 INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sim_1/new/tb_cpu.v" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module tb_cpu
-INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Study/DATKLL/RISC_CPU_MIPS.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module glbl
