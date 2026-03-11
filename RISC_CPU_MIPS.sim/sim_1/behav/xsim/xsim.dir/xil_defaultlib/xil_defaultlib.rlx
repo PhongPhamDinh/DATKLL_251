@@ -5,7 +5,7 @@ May 22 2025
 C:/Study/DATKLL/RISC_CPU_MIPS.sim/sim_1/behav/xsim/glbl.v,1741209010,verilog,,,,glbl,,,,,,,,
 C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sim_1/new/tb_cpu.v,1768049629,verilog,,,,tb_cpu,,,../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef,,,,,
 C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/CPU.v,1768619958,verilog,,C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/alu.v,,CPU,,,../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef,,,,,
-C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/alu.v,1768047214,verilog,,C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/alu_control.v,,alu,,,../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef,,,,,
+C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/alu.v,1768626595,verilog,,C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/alu_control.v,,alu,,,../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef,,,,,
 C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/alu_control.v,1768047217,verilog,,C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/control unit.v,,alu_control,,,../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef,,,,,
 C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/control unit.v,1768047016,verilog,,C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/data_memory.v,,control_unit,,,../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef,,,,,
 C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/data_memory.v,1768039252,verilog,,C:/Study/DATKLL/RISC_CPU_MIPS.srcs/sources_1/new/intruction memory.v,,data_memory,,,../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef,,,,,
